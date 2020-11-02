@@ -1,10 +1,14 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
+import { Home } from './pages';
 
 function App() {
 	return (
 		<div className='App'>
-			<p>Going to put an app here</p>
+			<Router>
+				<Home />
+			</Router>
 		</div>
 	);
 }
