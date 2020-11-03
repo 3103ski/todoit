@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Row, Label, Col } from 'reactstrap';
 import { Control, Form, Errors } from 'react-redux-form';
+import { connect } from 'react-redux';
+import { actions } from 'react-redux-form';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -33,17 +35,17 @@ class ContactForm extends Component {
 	handleSubmit(values) {
 		console.log(`Current state is: ${JSON.stringify(values)}`);
 		alert(`Current state is: ${JSON.stringify(values)}`);
-		this.props.resetFeedbackForm();
+		this.props.resetContactForm();
 	}
 	render() {
 		return (
 			<>
-				<Form model='feedbackForm' onSubmit={(values) => this.handleSubmit(values)}>
+				<Form style={{ width: '55%' }} model='contactForm' onSubmit={(values) => this.handleSubmit(values)}>
 					<Row className='form-group'>
-						<Label htmlFor='firstName' md={2}>
+						<Label htmlFor='firstName' className='d-none'>
 							First Name
 						</Label>
-						<Col md={10}>
+						<Col>
 							<Control.text
 								validators={{ required, minLength: minLength(2), maxLength: maxLength(15) }}
 								model='.firstName'
@@ -66,10 +68,10 @@ class ContactForm extends Component {
 						</Col>
 					</Row>
 					<Row className='form-group'>
-						<Label htmlFor='lastName' md={2}>
+						<Label htmlFor='lastName' className='d-none'>
 							Last Name
 						</Label>
-						<Col md={10}>
+						<Col>
 							<Control.text
 								validators={{ required, minLength: minLength(2), maxLength: maxLength(15) }}
 								model='.lastName'
@@ -92,10 +94,10 @@ class ContactForm extends Component {
 						</Col>
 					</Row>
 					<Row className='form-group'>
-						<Label htmlFor='phoneNum' md={2}>
+						<Label htmlFor='phoneNum' className='d-none'>
 							Phone
 						</Label>
-						<Col md={10}>
+						<Col>
 							<Control.text
 								validators={{ required, minLength: minLength(10), maxLength: maxLength(15), isNumber }}
 								model='.phoneNum'
@@ -119,10 +121,10 @@ class ContactForm extends Component {
 						</Col>
 					</Row>
 					<Row className='form-group'>
-						<Label htmlFor='email' md={2}>
+						<Label htmlFor='email' className='d-none'>
 							Email
 						</Label>
-						<Col md={10}>
+						<Col>
 							<Control.text validators={{ required, validEmail }} model='.email' id='email' name='email' placeholder='Email' className='form-control' />
 							<Errors
 								className='text-danger'
@@ -137,14 +139,14 @@ class ContactForm extends Component {
 						</Col>
 					</Row>
 					<Row className='form-group'>
-						<Col md={{ size: 4, offset: 2 }}>
+						<Col md={{ size: 6, offset: 0 }}>
 							<div className='form-check'>
 								<Label check>
 									<Control.checkbox model='.agree' name='agree' className='form-check-input' /> <strong>May we contact you?</strong>
 								</Label>
 							</div>
 						</Col>
-						<Col md={4}>
+						<Col>
 							<Control.select model='.contactType' name='contactType' className='form-control'>
 								<option>By Phone</option>
 								<option>By Email</option>
@@ -152,15 +154,15 @@ class ContactForm extends Component {
 						</Col>
 					</Row>
 					<Row className='form-group'>
-						<Label htmlFor='feedback' md={2}>
+						<Label htmlFor='feedback' className='d-none'>
 							Your Feedback
 						</Label>
-						<Col md={10}>
+						<Col>
 							<Control.textarea model='.feedback' id='feedback' name='feedback' rows='12' className='form-control' />
 						</Col>
 					</Row>
 					<Row className='form-group'>
-						<Col md={{ size: 10, offset: 2 }}>
+						<Col>
 							<Button type='submit' color='primary'>
 								Send Feedback
 							</Button>
@@ -171,5 +173,11 @@ class ContactForm extends Component {
 		);
 	}
 }
+const mapStateToProps = (state) => {
+	return {};
+};
 
-export default ContactForm;
+const mapDispatchToProps = {
+	resetContactForm: () => actions.reset('contactForm'),
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
