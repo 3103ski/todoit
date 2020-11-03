@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Header } from '../components';
 import * as ROUTES from '../constants/routes';
 // import logo from '../logo.svg';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavbarText } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 export default function HeaderContainer({ children }) {
@@ -11,10 +11,11 @@ export default function HeaderContainer({ children }) {
 
 	return (
 		<Header>
-			<Navbar color='light' light expand='md'>
+			<Navbar fixed='top' light expand='md'>
 				<NavbarBrand>
 					<NavLink className='nav-link' to={ROUTES.HOME}>
-						ToDOIT
+						<img src='/assets/images/check-mark.png' style={{ width: '40px', padding: '0' }} alt='checkmark' />
+						<NavbarText className='ml-3'>ToDOIT</NavbarText>
 					</NavLink>
 				</NavbarBrand>
 				<NavbarToggler onClick={toggle} />

@@ -7,7 +7,7 @@ export const Container = styled.div`
 	text-align: center;
 	justify-content: center;
 	align-items: center;
-	padding: 165px 45px;
+	padding: 45px;
 
 	button {
 		background-color: ${color.lightSecondary};

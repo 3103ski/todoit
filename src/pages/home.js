@@ -1,20 +1,63 @@
 import React from 'react';
-import { Feature } from '../components';
+import { Feature, LayoutSection, Footer } from '../components';
 import { HeaderContainer } from '../containers';
-import { Button } from 'reactstrap';
+import { Button, Col } from 'reactstrap';
+import * as colors from '../constants/colors';
 
 export default function Home() {
 	return (
 		<>
 			<HeaderContainer>
-				<Feature>
-					<Feature.Title>Welcome To ToDoIt</Feature.Title>
-					<Feature.SubTitle>Where things get done</Feature.SubTitle>
-					<Button size='sm' color={'primary'}>
-						SIGN UP
-					</Button>
-				</Feature>
+				<LayoutSection addStyle={{ padding: '200px 0' }}>
+					<Col>
+						<Feature>
+							<Feature.Title>Welcome To ToDoIt</Feature.Title>
+							<Feature.SubTitle>Where things get done</Feature.SubTitle>
+							<Button size='sm' color={'primary'}>
+								SIGN UP
+							</Button>
+						</Feature>
+					</Col>
+				</LayoutSection>
 			</HeaderContainer>
+			<LayoutSection>
+				<Col md={6}>
+					<Feature>
+						<Feature.Title>Get Work Done!</Feature.Title>
+						<Feature.SubTitle>We belive so many things about todos that we took time to make this basic app even thought it won't make popular. We Love Todos!</Feature.SubTitle>
+					</Feature>
+				</Col>
+				<Col md={6}>
+					<Feature>
+						<img width={200} src='/assets/images/checklist.png' alt='logo' />
+					</Feature>
+				</Col>
+			</LayoutSection>
+			<LayoutSection fullWidth containerColor={colors.ligthPrimary}>
+				<Col>
+					<Feature>
+						<Feature.Title>JUMP ON BOARD!</Feature.Title>
+						<Feature.SubTitle>
+							You should really consider signing up for
+							<br /> this app just because because becuase
+						</Feature.SubTitle>
+						<Button>SIGN UP!</Button>
+					</Feature>
+				</Col>
+			</LayoutSection>
+			<LayoutSection>
+				<Col md={6}>
+					<Feature>
+						<img width={200} src='/assets/images/confused.png' alt='logo' />
+					</Feature>
+				</Col>
+				<Col md={6}>
+					<Feature>
+						<h1>A form goes here</h1>
+					</Feature>
+				</Col>
+			</LayoutSection>
+			<Footer />
 		</>
 	);
 }
