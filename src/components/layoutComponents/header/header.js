@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Header } from '../components';
-import * as ROUTES from '../constants/routes';
+import { HeaderContainer } from './headerContainer';
+import * as ROUTES from '../../../constants/routes';
 // import logo from '../logo.svg';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavbarText } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
-export default function HeaderContainer({ children }) {
+export default function Header({ children }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const toggle = () => setIsOpen(!isOpen);
 
 	return (
-		<Header>
+		<HeaderContainer>
 			<Navbar fixed='top' light expand='md'>
 				<NavbarBrand>
 					<NavLink className='nav-link' to={ROUTES.HOME}>
@@ -40,6 +40,6 @@ export default function HeaderContainer({ children }) {
 				</Collapse>
 			</Navbar>
 			{children}
-		</Header>
+		</HeaderContainer>
 	);
 }

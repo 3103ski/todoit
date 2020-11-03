@@ -1,13 +1,12 @@
 import React from 'react';
-import { Feature, LayoutSection, Footer, ContactForm } from '../components';
-import { HeaderContainer } from '../containers';
+import { Feature, LayoutSection, Footer, ContactForm, Header } from '../components';
 import { Button, Col } from 'reactstrap';
 import * as colors from '../constants/colors';
 
 export default function Home() {
 	return (
 		<>
-			<HeaderContainer>
+			<Header>
 				<LayoutSection rowStyle={{ padding: '200px 0' }}>
 					<Col>
 						<Feature>
@@ -19,7 +18,7 @@ export default function Home() {
 						</Feature>
 					</Col>
 				</LayoutSection>
-			</HeaderContainer>
+			</Header>
 			<LayoutSection>
 				<Col md={6}>
 					<Feature>

@@ -2,15 +2,15 @@ import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { Background, Container, Logo, ButtonLink, LinkGroup } from './styles/header';
 
-export default function Header({ bg = true, children, ...restProps }) {
+export function HeaderContainer({ bg = true, children, ...restProps }) {
 	return bg ? <Background {...restProps}>{children}</Background> : children;
 }
 
-Header.Frame = function HeaderFrame({ children, ...restProps }) {
+HeaderContainer.Frame = function HeaderFrame({ children, ...restProps }) {
 	return <Container {...restProps}>{children}</Container>;
 };
 
-Header.Logo = function HeaderLogo({ to, ...restProps }) {
+HeaderContainer.Logo = function HeaderLogo({ to, ...restProps }) {
 	return (
 		<ReactRouterLink to={to}>
 			<Logo {...restProps} />
@@ -18,10 +18,10 @@ Header.Logo = function HeaderLogo({ to, ...restProps }) {
 	);
 };
 
-Header.NavContainer = function HeaderNavContainer({ children, ...restProps }) {
+HeaderContainer.NavContainer = function HeaderNavContainer({ children, ...restProps }) {
 	return <LinkGroup {...restProps}>{children}</LinkGroup>;
 };
 
-Header.ButtonLink = function HeaderButtonLink({ children, ...restProps }) {
+HeaderContainer.ButtonLink = function HeaderButtonLink({ children, ...restProps }) {
 	return <ButtonLink {...restProps}>{children}</ButtonLink>;
 };

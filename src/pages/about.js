@@ -1,13 +1,12 @@
 import React from 'react';
 import * as colors from '../constants/colors';
-import { Feature, Footer, LayoutSection, ContactForm, FormContainer } from '../components';
-import { HeaderContainer } from '../containers';
+import { Feature, Footer, LayoutSection, ContactForm, FormContainer, Header } from '../components';
 import { Button, Col } from 'reactstrap';
 
 export default function About() {
 	return (
 		<>
-			<HeaderContainer />
+			<Header />
 			<LayoutSection>
 				<Col md={6}>
 					<Feature>
