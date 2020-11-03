@@ -3,12 +3,7 @@ import { Button, Row, Label, Col } from 'reactstrap';
 import { Control, Form, Errors } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
-
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !val || val.length <= len;
-const minLength = (len) => (val) => val && val.length >= len;
-const isNumber = (val) => !isNaN(+val);
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+import { required, maxLength, minLength, isNumber, validEmail } from '../../constants/validators';
 
 class ContactForm extends Component {
 	constructor(props) {
@@ -40,7 +35,7 @@ class ContactForm extends Component {
 	render() {
 		return (
 			<>
-				<Form style={{ width: '55%' }} model='contactForm' onSubmit={(values) => this.handleSubmit(values)}>
+				<Form style={{ width: '100%' }} model='contactForm' onSubmit={(values) => this.handleSubmit(values)}>
 					<Row className='form-group'>
 						<Label htmlFor='firstName' className='d-none'>
 							First Name

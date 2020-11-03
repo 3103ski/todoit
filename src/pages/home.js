@@ -1,5 +1,5 @@
 import React from 'react';
-import { Feature, LayoutSection, Footer } from '../components';
+import { Feature, LayoutSection, Footer, ContactForm } from '../components';
 import { HeaderContainer } from '../containers';
 import { Button, Col } from 'reactstrap';
 import * as colors from '../constants/colors';
@@ -8,7 +8,7 @@ export default function Home() {
 	return (
 		<>
 			<HeaderContainer>
-				<LayoutSection addStyle={{ padding: '200px 0' }}>
+				<LayoutSection rowStyle={{ padding: '200px 0' }}>
 					<Col>
 						<Feature>
 							<Feature.Title>Welcome To ToDoIt</Feature.Title>
@@ -33,7 +33,7 @@ export default function Home() {
 					</Feature>
 				</Col>
 			</LayoutSection>
-			<LayoutSection fullWidth containerColor={colors.ligthPrimary}>
+			<LayoutSection fullWidth containerStyle={{ backgroundColor: colors.ligthPrimary }}>
 				<Col>
 					<Feature>
 						<Feature.Title>JUMP ON BOARD!</Feature.Title>
@@ -46,14 +46,18 @@ export default function Home() {
 				</Col>
 			</LayoutSection>
 			<LayoutSection>
+				<Col className='text-center' md={12}>
+					<Feature.Title>GOT QUESTIONS?</Feature.Title>
+					<Feature.SubTitle>Reach out and let a team member know.</Feature.SubTitle>
+				</Col>
 				<Col md={6}>
 					<Feature>
-						<img width={200} src='/assets/images/confused.png' alt='logo' />
+						<img width={300} className='pt-5' src='/assets/images/confused.png' alt='logo' />
 					</Feature>
 				</Col>
 				<Col md={6}>
 					<Feature>
-						<h1>A form goes here</h1>
+						<ContactForm></ContactForm>
 					</Feature>
 				</Col>
 			</LayoutSection>

@@ -1,5 +1,9 @@
 export { default as Header } from './header';
 export { default as Feature } from './feature';
-export { default as LayoutSection } from './layoutSection/LayoutSection';
+export { default as LayoutSection } from './layoutComponents/layoutSection/LayoutSection';
 export { default as Footer } from './footer/FooterComponent';
 export { default as ContactForm } from './contactForm/ContactFormComponent';
+export { default as SignUpForm } from './formComponents/signUpForm/SignUpFormComponent';
+export { default as SignInForm } from './formComponents/signInForm/SignInFormComponent';
+export { default as FormContainer } from './formComponents/FormContainer';
+export { default as FormInput } from './formComponents/FormInput';

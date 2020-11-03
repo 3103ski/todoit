@@ -1,6 +1,6 @@
 import React from 'react';
 import * as colors from '../constants/colors';
-import { Feature, Footer, LayoutSection, ContactForm } from '../components';
+import { Feature, Footer, LayoutSection, ContactForm, FormContainer } from '../components';
 import { HeaderContainer } from '../containers';
 import { Button, Col } from 'reactstrap';
 
@@ -32,12 +32,10 @@ export default function About() {
 				</Col>
 			</LayoutSection>
 			<LayoutSection fullWidth containerColor={colors.ligthPrimary}>
-				<Col>
-					<Feature>
-						<Feature.Title>CONTACT US</Feature.Title>
-						<Feature.SubTitle>EVENTUALLY THIS SPACE WILL BE FILLED UP WITH A FORM</Feature.SubTitle>
+				<Col md={6} className='mx-auto'>
+					<FormContainer formTitle='CONTACT US'>
 						<ContactForm></ContactForm>
-					</Feature>
+					</FormContainer>
 				</Col>
 			</LayoutSection>
 			<Footer />

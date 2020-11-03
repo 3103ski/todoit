@@ -6,7 +6,7 @@ import { LayoutSection, Feature } from '../index';
 export default function FooterComponent(props) {
 	return (
 		<>
-			<LayoutSection fullWidth containerColor={colors.darkPrimary}>
+			<LayoutSection fullWidth rowStyle={{ padding: '0', height: '100%', alignItems: 'center' }} containerStyle={{ backgroundColor: colors.darkPrimary, ...props.footerStyle }}>
 				<Col md={2}>
 					<Feature>
 						<Feature.SubTitle>Logo</Feature.SubTitle>

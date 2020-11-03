@@ -1,16 +1,20 @@
 import React from 'react';
-import { Feature } from '../components';
+import { Col } from 'reactstrap';
+import { LayoutSection, Footer, FormContainer, SignInForm } from '../components';
 import { HeaderContainer } from '../containers';
-// import { Button } from 'reactstrap';
 
-export default function SignIn() {
+export default function SignUp() {
 	return (
 		<>
-			<HeaderContainer>
-				<Feature>
-					<Feature.Title>SIGN IN</Feature.Title>
-				</Feature>
-			</HeaderContainer>
+			<HeaderContainer></HeaderContainer>
+			<LayoutSection rowStyle={{ height: '100%', alignItems: 'center' }} containerStyle={{ height: '80vh' }}>
+				<Col md={6} className='mx-auto'>
+					<FormContainer formTitle='Login To Your Account'>
+						<SignInForm></SignInForm>
+					</FormContainer>
+				</Col>
+			</LayoutSection>
+			<Footer footerStyle={{ height: '20vh' }} />
 		</>
 	);
 }
