@@ -26,18 +26,18 @@ List.ListItem = function ({ children, ...restProps }) {
 
 	arrow = (
 		<span className='toListBtn'>
-			<i class='fas fa-arrow-right' />
+			<i className='fas fa-arrow-right' />
 		</span>
 	);
 	square = (
 		<span className={`${restProps.offList ? 'offListCheck' : 'onListCheck'}`}>
-			<i class='far fa-square' />
+			<i className='far fa-square' />
 		</span>
 	);
 
 	squareChk = (
 		<span className={`${restProps.offList ? 'offListCheck' : 'onListCheck'}`}>
-			<i class='fas fa-check-square' />
+			<i className='fas fa-check-square' />
 		</span>
 	);
 	if (todo) {

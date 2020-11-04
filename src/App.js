@@ -1,32 +1,47 @@
 // React
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { ConfigureStore } from './redux/configureStore';
+import { connect } from 'react-redux';
+
+// Firestore
+import { useAuthListener } from './hooks';
+
 // Pages
 import { HomePage, AboutPage, SignInPage, SignUpPage, DashboardPage } from './pages';
+import { ProtectedRoute, IsUserRedirect } from './util/redirects';
 
 // Other
 import * as ROUTES from './constants/routes';
 import './App.css';
 
 function App() {
-	const store = ConfigureStore();
+	const { user } = useAuthListener();
 	return (
 		<div className='App'>
-			<Provider store={store}>
-				<Router>
-					<Switch>
-						<Route exact path={ROUTES.HOME} component={HomePage} />
-						<Route exact path={ROUTES.ABOUT} component={AboutPage} />
-						<Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-						<Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
-						<Route exact path={ROUTES.DASHBOARD} component={DashboardPage} />
-					</Switch>
-				</Router>
-			</Provider>
+			<Router>
+				<Switch>
+					<Route exact path={ROUTES.HOME} component={HomePage} />
+					<Route exact path={ROUTES.ABOUT} component={AboutPage} />
+
+					<IsUserRedirect loggedInPath={ROUTES.DASHBOARD} user={user} path={ROUTES.SIGN_UP}>
+						<SignUpPage />
+					</IsUserRedirect>
+					<IsUserRedirect loggedInPath={ROUTES.DASHBOARD} user={user} path={ROUTES.SIGN_IN}>
+						<SignInPage />
+					</IsUserRedirect>
+					<ProtectedRoute user={user} path={ROUTES.DASHBOARD}>
+						<DashboardPage />
+					</ProtectedRoute>
+				</Switch>
+			</Router>
 		</div>
 	);
 }
 
-export default App;
+const mapStateToProps = (state) => {
+	return {
+		isLoggedIn: state.user.loggedIn,
+	};
+};
+
+export default connect(mapStateToProps)(App);

@@ -30,7 +30,7 @@ export default function AboutPage() {
 					</Feature>
 				</Col>
 			</LayoutSection>
-			<LayoutSection fullWidth containerColor={colors.ligthPrimary}>
+			<LayoutSection fullWidth containerStyle={{ backgroundColor: colors.ligthPrimary }}>
 				<Col md={6} className='mx-auto'>
 					<FormContainer formTitle='CONTACT US'>
 						<ContactForm></ContactForm>

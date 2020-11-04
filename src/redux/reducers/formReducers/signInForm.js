@@ -1,4 +1,4 @@
 export const InitialSignIn = {
-	username: '',
+	email: '',
 	password: '',
 };

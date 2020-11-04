@@ -1,2 +1,2 @@
 // userReducer
-export { createUserInit } from './userReducer';
+export { createUserInit, logInUserInit } from './userActionReducer';

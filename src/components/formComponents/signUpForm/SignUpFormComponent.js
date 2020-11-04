@@ -34,8 +34,8 @@ class SignUpForm extends Component {
 			...values,
 		};
 		console.log(`This is the attempted user: `, newUser);
-		this.props.createNewAccount(newUser);
 		this.props.resetSignUpForm();
+		this.props.createNewAccount(newUser);
 	}
 	compon;
 

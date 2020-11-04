@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+// import { Redirect } from 'react-router-dom';
+// import * as ROUTES from '../../../constants/routes';
+import * as ActionTypes from '../../../redux/actions';
 import { Button, Row, Col } from 'reactstrap';
 import { Form } from 'react-redux-form';
 import { connect } from 'react-redux';
@@ -9,11 +12,11 @@ class SignInForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: '',
+			email: '',
 			password: '',
 
 			touched: {
-				username: false,
+				email: false,
 				password: false,
 			},
 		};
@@ -22,26 +25,24 @@ class SignInForm extends Component {
 	}
 
 	handleSubmit(values) {
-		console.log(`Current state is: ${JSON.stringify(values)}`);
-		alert(`Current state is: ${JSON.stringify(values)}`);
+		console.log('PASSING THIS', values);
 		this.props.resetSignInForm();
+		this.props.logInUserInit(values);
 	}
 	render() {
 		return (
 			<>
-				<Form style={{ width: '100%' }} model='signUpForm' onSubmit={(values) => this.handleSubmit(values)}>
+				<Form style={{ width: '100%' }} model='signInForm' onSubmit={(values) => this.handleSubmit(values)}>
 					<FormInput
 						errMsgs={{
-							required: 'Username is required',
-							minLength: 'Username must be at least 6 characters',
-							maxLength: 'Username cannot be longer than 15 characters',
+							required: 'Required',
+							validEmail: 'You must enter a valid email address',
 						}}
 						inputType='text'
-						placeholder='Username'
-						name='username'
+						placeholder='Email'
+						name='email'
 						required
-						minLength={6}
-						maxLength={15}
+						isEmail
 					/>
 					<FormInput
 						errMsgs={{
@@ -65,15 +66,19 @@ class SignInForm extends Component {
 						</Col>
 					</Row>
 				</Form>
+				{/* {this.props.userLoaded ? <Redirect to={ROUTES.DASHBOARD} /> : null} */}
 			</>
 		);
 	}
 }
 const mapStateToProps = (state) => {
-	return {};
+	return {
+		userLoaded: state.user.profileLoaded,
+	};
 };
 
 const mapDispatchToProps = {
-	resetSignUpForm: () => actions.reset('signInForm'),
+	resetSignInForm: () => actions.reset('signInForm'),
+	logInUserInit: (email, password) => ActionTypes.logInUserInit(email, password),
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);
