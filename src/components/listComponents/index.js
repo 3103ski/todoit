@@ -1,14 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ListContainer, ListFrame, ListItem, ListTitle, ContainerListFrame } from './styles/list';
 
-class List extends Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-		return <ListFrame {...this.props.restProps}>{this.props.children}</ListFrame>;
-	}
+export default function List({ children, ...restProps }) {
+	return <ListFrame {...this.props.restProps}>{this.props.children}</ListFrame>;
 }
 
 List.ListTitle = function ({ children, ...restProps }) {
@@ -69,5 +63,3 @@ List.ListItem = function ({ children, ...restProps }) {
 		</ListItem>
 	);
 };
-
-export default List;

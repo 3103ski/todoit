@@ -27,10 +27,12 @@ class SignUpForm extends Component {
 	}
 
 	handleSubmit(values) {
+		console.log(`This is the state: ${this.state}`);
 		console.log(`Current state is: ${JSON.stringify(values)}`);
 		alert(`Current state is: ${JSON.stringify(values)}`);
 		this.props.resetSignUpForm();
 	}
+
 	render() {
 		return (
 			<>
