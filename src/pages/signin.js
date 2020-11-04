@@ -2,7 +2,7 @@ import React from 'react';
 import { Col } from 'reactstrap';
 import { LayoutSection, Footer, FormContainer, SignInForm, Header } from '../components';
 
-export default function SignUp() {
+export default function SignUpPage() {
 	return (
 		<>
 			<Header />

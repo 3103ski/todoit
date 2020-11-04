@@ -4,7 +4,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
 // Pages
-import { Home, About, SignIn, SignUp } from './pages';
+import { HomePage, AboutPage, SignInPage, SignUpPage, DashboardPage } from './pages';
 
 // Other
 import * as ROUTES from './constants/routes';
@@ -17,10 +17,11 @@ function App() {
 			<Provider store={store}>
 				<Router>
 					<Switch>
-						<Route exact path={ROUTES.HOME} component={Home} />
-						<Route exact path={ROUTES.ABOUT} component={About} />
-						<Route exact path={ROUTES.SIGN_IN} component={SignIn} />
-						<Route exact path={ROUTES.SIGN_UP} component={SignUp} />
+						<Route exact path={ROUTES.HOME} component={HomePage} />
+						<Route exact path={ROUTES.ABOUT} component={AboutPage} />
+						<Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+						<Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+						<Route exact path={ROUTES.DASHBOARD} component={DashboardPage} />
 					</Switch>
 				</Router>
 			</Provider>

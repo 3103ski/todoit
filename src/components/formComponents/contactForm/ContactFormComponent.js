@@ -3,7 +3,7 @@ import { Button, Row, Label, Col } from 'reactstrap';
 import { Control, Form, Errors } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
-import { required, maxLength, minLength, isNumber, validEmail } from '../../constants/validators';
+import { required, maxLength, minLength, isNumber, validEmail } from '../../../constants/validators';
 
 class ContactForm extends Component {
 	constructor(props) {

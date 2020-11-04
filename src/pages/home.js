@@ -3,7 +3,7 @@ import { Feature, LayoutSection, Footer, ContactForm, Header } from '../componen
 import { Button, Col } from 'reactstrap';
 import * as colors from '../constants/colors';
 
-export default function Home() {
+export default function HomePage() {
 	return (
 		<>
 			<Header>

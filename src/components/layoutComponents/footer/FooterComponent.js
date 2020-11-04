@@ -1,7 +1,7 @@
 import React from 'react';
-import * as colors from '../../constants/colors';
+import * as colors from '../../../constants/colors';
 import { Col } from 'reactstrap';
-import { LayoutSection, Feature } from '../index';
+import { LayoutSection, Feature } from '../../index';
 
 export default function FooterComponent(props) {
 	return (
