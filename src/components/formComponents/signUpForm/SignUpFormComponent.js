@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import * as ROUTES from '../../../constants/routes';
 import { Button, Row, Col } from 'reactstrap';
 import { Form } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
+import * as action from '../../../redux/actions';
 import { FormInput } from '../../index';
 
 class SignUpForm extends Component {
@@ -27,11 +30,14 @@ class SignUpForm extends Component {
 	}
 
 	handleSubmit(values) {
-		console.log(`This is the state: ${this.state}`);
-		console.log(`Current state is: ${JSON.stringify(values)}`);
-		alert(`Current state is: ${JSON.stringify(values)}`);
+		const newUser = {
+			...values,
+		};
+		console.log(`This is the attempted user: `, newUser);
+		this.props.createNewAccount(newUser);
 		this.props.resetSignUpForm();
 	}
+	compon;
 
 	render() {
 		return (
@@ -109,15 +115,19 @@ class SignUpForm extends Component {
 						</Col>
 					</Row>
 				</Form>
+				{this.props.userLoaded ? <Redirect to={ROUTES.DASHBOARD} /> : null}
 			</>
 		);
 	}
 }
 const mapStateToProps = (state) => {
-	return {};
+	return {
+		userLoaded: state.user.profileLoaded,
+	};
 };
 
 const mapDispatchToProps = {
 	resetSignUpForm: () => actions.reset('signUpForm'),
+	createNewAccount: (newUser) => action.createUserInit(newUser),
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

@@ -8,10 +8,8 @@ import { FirebaseContext } from './context/firebase';
 import { firebase } from './lib/firebase.prod';
 
 ReactDOM.render(
-	<React.StrictMode>
-		<FirebaseContext.Provider value={{ firebase }}>
-			<App />
-		</FirebaseContext.Provider>
-	</React.StrictMode>,
+	<FirebaseContext.Provider value={{ firebase }}>
+		<App />
+	</FirebaseContext.Provider>,
 	document.getElementById('root')
 );
