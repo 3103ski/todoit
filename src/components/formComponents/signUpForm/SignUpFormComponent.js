@@ -122,7 +122,7 @@ class SignUpForm extends Component {
 }
 const mapStateToProps = (state) => {
 	return {
-		userLoaded: state.user.profileLoaded,
+		userLoaded: state.app.profileLoaded,
 	};
 };
 

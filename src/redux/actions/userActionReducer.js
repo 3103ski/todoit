@@ -79,3 +79,23 @@ export const logInUserInit = ({ email, password }) => {
 			});
 	};
 };
+
+export const resetUser = () => {
+	return {
+		type: ActionTypes.LOGOUT_USER,
+	};
+};
+
+export const resetTodos = () => {
+	return {
+		type: ActionTypes.RESET_TODOS_REDUCER,
+	};
+};
+
+export const logoutUser = () => {
+	firebase.auth().signOut();
+
+	return {
+		type: ActionTypes.LOGOUT_USER,
+	};
+};

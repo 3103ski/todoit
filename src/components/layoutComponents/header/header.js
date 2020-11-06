@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../../redux/actions/';
 import { HeaderContainer } from './headerContainer';
 import * as ROUTES from '../../../constants/routes';
 
 import { useAuthListener } from '../../../hooks';
-import { firebase } from '../../../lib/firebase.prod';
 
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavbarText } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavbarText } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 function Header(props) {
@@ -13,13 +14,30 @@ function Header(props) {
 	const toggle = () => setIsOpen(!isOpen);
 	const { user } = useAuthListener();
 
+	const [todosCleared, todosClearedToggle] = useState(false);
+
+	useEffect(() => {
+		if (!todosCleared && !user) {
+			props.resetTodos();
+			console.log('*+*+*+*+*+*+* cleared TODO LISTS *+*+*+*+*+*+*+*');
+		}
+		todosClearedToggle(true);
+	}, [todosCleared, user, props.resetTodos, todosClearedToggle, props]);
+
 	return (
 		<HeaderContainer>
 			<Navbar fixed='top' light expand='md'>
-				<NavbarBrand className='nav-link' to={ROUTES.HOME}>
-					<img src='/assets/images/check-mark.png' style={{ width: '40px', padding: '0' }} alt='checkmark' />
-					<NavbarText className='ml-3'>ToDOIT</NavbarText>
-				</NavbarBrand>
+				{user ? (
+					<NavLink className='nav-link' to={ROUTES.DASHBOARD}>
+						<img src='/assets/images/check-mark.png' style={{ width: '40px', padding: '0' }} alt='checkmark' />
+						<NavbarText className='ml-3'>ToDOIT</NavbarText>
+					</NavLink>
+				) : (
+					<NavLink className='nav-link' to={ROUTES.HOME}>
+						<img src='/assets/images/check-mark.png' style={{ width: '40px', padding: '0' }} alt='checkmark' />
+						<NavbarText className='ml-3'>ToDOIT</NavbarText>
+					</NavLink>
+				)}
 				<NavbarToggler onClick={toggle} />
 				<Collapse isOpen={isOpen} navbar>
 					<Nav className='ml-auto' navbar>
@@ -49,7 +67,7 @@ function Header(props) {
 						) : null}
 						{user ? (
 							<NavItem>
-								<span style={{ cursor: 'pointer' }} className='nav-link' onClick={() => firebase.auth().signOut()}>
+								<span style={{ cursor: 'pointer' }} className='nav-link' onClick={() => props.logout()}>
 									LOGOUT
 								</span>
 							</NavItem>
@@ -61,5 +79,17 @@ function Header(props) {
 		</HeaderContainer>
 	);
 }
+const mapStateToProps = (state) => {
+	return {
+		hasLists: state.app.hasLists,
+		hasProfile: state.app.profileLoaded,
+		todoLists: state.app.todoLists,
+	};
+};
 
-export default Header;
+const mapDispatchToProps = {
+	logout: () => actions.logoutUser(),
+	getLists: (userId) => actions.getListsInit(userId),
+	resetTodos: () => actions.resetTodosReducer(),
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

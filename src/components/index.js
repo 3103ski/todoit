@@ -17,5 +17,6 @@ export { default as FormInput } from './formComponents/FormInput';
 export { default as ContactForm } from './formComponents/contactForm/ContactFormComponent';
 export { default as SignUpForm } from './formComponents/signUpForm/SignUpFormComponent';
 export { default as SignInForm } from './formComponents/signInForm/SignInFormComponent';
+export { default as NewTodoListForm } from './formComponents/addTodoList/NewTodoListForm';
 //
 export { default as Feature } from './feature';

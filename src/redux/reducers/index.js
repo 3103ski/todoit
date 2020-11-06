@@ -2,6 +2,7 @@
 export { ContactInitial } from './formReducers/contactForm';
 export { InitialSignUp } from './formReducers/signUpForm';
 export { InitialSignIn } from './formReducers/signInForm';
+export { NewTodoListInitial } from './formReducers/newTodoListForm';
 
 // Data Reducers
-export { default as userReducer } from './dataReducers/userReducer';
+export { default as appReducer } from './dataReducers/appReducer';

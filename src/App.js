@@ -26,9 +26,11 @@ function App() {
 					<IsUserRedirect loggedInPath={ROUTES.DASHBOARD} user={user} path={ROUTES.SIGN_UP}>
 						<SignUpPage />
 					</IsUserRedirect>
+
 					<IsUserRedirect loggedInPath={ROUTES.DASHBOARD} user={user} path={ROUTES.SIGN_IN}>
 						<SignInPage />
 					</IsUserRedirect>
+
 					<ProtectedRoute user={user} path={ROUTES.DASHBOARD}>
 						<DashboardPage />
 					</ProtectedRoute>
@@ -40,7 +42,7 @@ function App() {
 
 const mapStateToProps = (state) => {
 	return {
-		isLoggedIn: state.user.loggedIn,
+		isLoggedIn: state.app.loggedIn,
 	};
 };
 

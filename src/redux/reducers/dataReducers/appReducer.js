@@ -6,6 +6,13 @@ import { updateObject } from '../../../util/utility';
 //----------------
 
 const intitialState = {
+	// todos
+	todoLists: [],
+	isLoadingLists: false,
+	hasLists: false,
+	errorMsgTodos: null,
+
+	// user
 	profile: {
 		username: '',
 		email: '',
@@ -18,13 +25,53 @@ const intitialState = {
 	profileLoaded: false,
 	isLoggedIn: false,
 	error: false,
-	errorMsg: null,
+	errorMsgUser: null,
 };
 
-//----------------
-// 	CREATE
-//----------------
+//************************** */
+// 	TODOS
+//************************** */
 
+// get todo lists
+const getListsStart = (state, action) => {
+	return updateObject(state, {
+		isLoadingLists: true,
+		hasLists: false,
+	});
+};
+
+const getListsError = (state, action) => {
+	return updateObject(state, {
+		isLoadingLists: false,
+		hasLists: false,
+		errorMsgTodos: action.errorMsg,
+	});
+};
+
+const getListsSuccess = (state, action) => {
+	return updateObject(state, {
+		isLoadingLists: false,
+		hasLists: true,
+		todoLists: action.lists,
+	});
+};
+
+// resets app state related to todos
+const resetTodosReducer = (state, action) => {
+	console.log('*+*+*+*+*+*+*+* resetTodos - appReducer.js +*+*+*+*+*+*+*+*+*');
+	return updateObject(state, {
+		todoLists: [],
+		isLoadingLists: false,
+		hasLists: false,
+		errorMsgTodos: null,
+	});
+};
+
+//************************** */
+// 	USER / AUTH
+//************************** */
+
+// create user
 const createUserSuccess = (state, action) => {
 	const user = action.user;
 	const newProfile = {
@@ -40,7 +87,7 @@ const createUserSuccess = (state, action) => {
 		id: user.uid,
 		profile: newProfile,
 		error: false,
-		errorMsg: null,
+		errorMsgUser: null,
 	});
 };
 
@@ -58,21 +105,18 @@ const createUserError = (state, action) => {
 		isLoading: false,
 		profileLoaded: false,
 		error: true,
-		errorMsg: action.errorMsg,
+		errorMsgUser: action.errorMsg,
 		isLoggedIn: false,
 	});
 };
 
-//----------------
-// 	AUTH
-//----------------
-
+// authentication
 const logInUserStart = (state, action) => {
 	return updateObject(state, {
 		isLoading: true,
 		profileLoaded: false,
 		error: false,
-		errorMsg: null,
+		errorMsgUser: null,
 		isLoggedIn: false,
 	});
 };
@@ -93,7 +137,7 @@ const logInUserSuccess = (state, action) => {
 		profile: newProfile,
 		error: false,
 		isLoggedIn: true,
-		errorMsg: null,
+		errorMsgUser: null,
 	});
 };
 
@@ -102,21 +146,35 @@ const logInUserError = (state, action) => {
 		isLoading: false,
 		profileLoaded: false,
 		error: true,
-		errorMsg: action.errorMsg,
+		errorMsgUser: action.errorMsg,
 		isLoggedIn: false,
 	});
 };
 
+// reset app user on logout
 const logoutUser = (state, action) => {
 	return (
 		state,
 		updateObject({
+			// todos
+			todoLists: [],
+			isLoadingLists: false,
+			hasLists: false,
+			errorMsgTodos: null,
+			// user
+			profile: {
+				username: '',
+				email: '',
+				firstName: '',
+				lastName: '',
+			},
+			id: '',
 			updatingProfile: false,
 			isLoading: false,
 			profileLoaded: false,
 			isLoggedIn: false,
 			error: false,
-			errorMsg: null,
+			errorMsgUser: null,
 		})
 	);
 };
@@ -125,8 +183,18 @@ const logoutUser = (state, action) => {
 // 	REDUCER
 //----------------
 
-const userReducer = (state = intitialState, action) => {
+const todosReducer = (state = intitialState, action) => {
 	switch (action.type) {
+		// todos
+		case ActionTypes.RESET_TODOS_REDUCER:
+			return resetTodosReducer(state, action);
+		case ActionTypes.GET_LISTS_START:
+			return getListsStart(state, action);
+		case ActionTypes.GET_LISTS_ERROR:
+			return getListsError(state, action);
+		case ActionTypes.GET_LISTS_SUCCESS:
+			return getListsSuccess(state, action);
+		// user
 		case ActionTypes.CREATE_USER_START:
 			return createUserStart(state, action);
 		case ActionTypes.CREATE_USER_ERROR:
@@ -146,4 +214,4 @@ const userReducer = (state = intitialState, action) => {
 	}
 };
 
-export default userReducer;
+export default todosReducer;

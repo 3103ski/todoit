@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import { Redirect } from 'react-router-dom';
-// import * as ROUTES from '../../../constants/routes';
 import * as ActionTypes from '../../../redux/actions';
 import { Button, Row, Col } from 'reactstrap';
 import { Form } from 'react-redux-form';
@@ -14,7 +12,6 @@ class SignInForm extends Component {
 		this.state = {
 			email: '',
 			password: '',
-
 			touched: {
 				email: false,
 				password: false,
@@ -25,7 +22,6 @@ class SignInForm extends Component {
 	}
 
 	handleSubmit(values) {
-		console.log('PASSING THIS', values);
 		this.props.resetSignInForm();
 		this.props.logInUserInit(values);
 	}
@@ -66,15 +62,12 @@ class SignInForm extends Component {
 						</Col>
 					</Row>
 				</Form>
-				{/* {this.props.userLoaded ? <Redirect to={ROUTES.DASHBOARD} /> : null} */}
 			</>
 		);
 	}
 }
 const mapStateToProps = (state) => {
-	return {
-		userLoaded: state.user.profileLoaded,
-	};
+	return {};
 };
 
 const mapDispatchToProps = {
