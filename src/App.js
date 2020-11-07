@@ -1,7 +1,9 @@
 // React
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import { connect } from 'react-redux';
+
+// Providers
+import { TodoContentProvider } from './contexts/todosContext';
 
 // Firestore
 import { useAuthListener } from './hooks';
@@ -18,32 +20,28 @@ function App() {
 	const { user } = useAuthListener();
 	return (
 		<div className='App'>
-			<Router>
-				<Switch>
-					<Route exact path={ROUTES.HOME} component={HomePage} />
-					<Route exact path={ROUTES.ABOUT} component={AboutPage} />
+			<TodoContentProvider>
+				<Router>
+					<Switch>
+						<Route exact path={ROUTES.HOME} component={HomePage} />
+						<Route exact path={ROUTES.ABOUT} component={AboutPage} />
 
-					<IsUserRedirect loggedInPath={ROUTES.DASHBOARD} user={user} path={ROUTES.SIGN_UP}>
-						<SignUpPage />
-					</IsUserRedirect>
+						<IsUserRedirect loggedInPath={ROUTES.DASHBOARD} user={user} path={ROUTES.SIGN_UP}>
+							<SignUpPage />
+						</IsUserRedirect>
 
-					<IsUserRedirect loggedInPath={ROUTES.DASHBOARD} user={user} path={ROUTES.SIGN_IN}>
-						<SignInPage />
-					</IsUserRedirect>
+						<IsUserRedirect loggedInPath={ROUTES.DASHBOARD} user={user} path={ROUTES.SIGN_IN}>
+							<SignInPage />
+						</IsUserRedirect>
 
-					<ProtectedRoute user={user} path={ROUTES.DASHBOARD}>
-						<DashboardPage />
-					</ProtectedRoute>
-				</Switch>
-			</Router>
+						<ProtectedRoute user={user} path={ROUTES.DASHBOARD}>
+							<DashboardPage />
+						</ProtectedRoute>
+					</Switch>
+				</Router>
+			</TodoContentProvider>
 		</div>
 	);
 }
 
-const mapStateToProps = (state) => {
-	return {
-		isLoggedIn: state.app.loggedIn,
-	};
-};
-
-export default connect(mapStateToProps)(App);
+export default App;

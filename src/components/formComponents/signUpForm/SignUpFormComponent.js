@@ -120,14 +120,9 @@ class SignUpForm extends Component {
 		);
 	}
 }
-const mapStateToProps = (state) => {
-	return {
-		userLoaded: state.app.profileLoaded,
-	};
-};
 
 const mapDispatchToProps = {
 	resetSignUpForm: () => actions.reset('signUpForm'),
 	createNewAccount: (newUser) => action.createUserInit(newUser),
 };
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
+export default connect(null, mapDispatchToProps)(SignUpForm);

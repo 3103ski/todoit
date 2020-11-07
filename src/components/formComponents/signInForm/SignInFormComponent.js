@@ -5,7 +5,6 @@ import { Form } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
 import { FormInput } from '../../index';
-
 class SignInForm extends Component {
 	constructor(props) {
 		super(props);
@@ -23,7 +22,7 @@ class SignInForm extends Component {
 
 	handleSubmit(values) {
 		this.props.resetSignInForm();
-		this.props.logInUserInit(values);
+		this.props.authInit(values.email, values.password);
 	}
 	render() {
 		return (

@@ -4,6 +4,9 @@ import { Control, Errors } from 'react-redux-form';
 import { required, maxLength, minLength, validEmail, isNumber } from '../../constants/validators';
 
 export default function FormInput({ children, ...props }) {
+	function reset(e) {
+		console.log(e.target.value);
+	}
 	const newInput = () => {
 		let validators = {};
 		if (props.maxLength) {
@@ -23,7 +26,18 @@ export default function FormInput({ children, ...props }) {
 		}
 		switch (props.inputType) {
 			case 'text':
-				return <Control.text validators={validators} model={`.${props.name}`} id={props.name} name={props.name} placeholder={props.placeholder} className='form-control' />;
+				return (
+					<Control.text
+						onSubmit={() => reset()}
+						onChange={props.onChange}
+						validators={validators}
+						model={`.${props.name}`}
+						id={props.name}
+						name={props.name}
+						placeholder={props.placeholder}
+						className='form-control'
+					/>
+				);
 			default:
 				return <p>Be sure to include and inputType such as text or select</p>;
 		}

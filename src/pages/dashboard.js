@@ -1,7 +1,8 @@
-// React and redux
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../redux/actions';
+// React and Hooks
+import React, { useState, useContext, useEffect } from 'react';
+import { TodoContentContext } from '../contexts/todosContext';
+import { UserContentContext } from '../contexts/userContext';
+import { firebase } from '../lib/firebase.prod';
 // UI components
 import { LayoutSection, Footer, Header, Dashboard, List, NewTodoListForm } from '../components';
 import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
@@ -9,17 +10,15 @@ import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { useAuthListener } from '../hooks/';
 import { fakeData } from '../constants/fakeData';
 
-const DashboardPage = (props) => {
-	const [todoLists, setTodoLists] = useState(props.app.todoLists);
-	const [haveLists, toggleHaveLists] = useState(false);
-
+const DashboardPage = () => {
+	const { user } = useAuthListener();
+	const [state] = useContext(TodoContentContext);
+	const [userContext] = useContext(UserContentContext);
+	// local state
 	const [view, setView] = useState('MainDash');
 	const [activeList, setActiveList] = useState(null);
-
 	const [modal, setModal] = useState(false);
 	const toggleModal = () => setModal(!modal);
-
-	const { user } = useAuthListener();
 
 	const selectList = function (list) {
 		setActiveList(list);
@@ -27,15 +26,23 @@ const DashboardPage = (props) => {
 		console.log(view);
 	};
 
-	useState(() => {
-		if (!haveLists && user && user.uid) {
-			console.log('*+*+*+*+*+* DASHBOARD IS GETTINGS LISTS *+*+*+*+*+*');
-			props.todoListsInit(user.uid);
-		}
-		toggleHaveLists(!haveLists);
-		setTodoLists(props.app.todoLists);
-	}, [props.app.todoLists, user]);
-
+	useEffect(() => {
+		const fetchData = async () => {
+			const db = firebase.firestore();
+			state.fetchTodoListsStart();
+			db.collection('todolists')
+				.where('ownerId', '==', `${user.uid}`)
+				.onSnapshot(function (data) {
+					console.log(data);
+					const allLists = data.docs.map((doc) => {
+						console.log(doc.data());
+						return { ...doc.data(), id: doc.id };
+					});
+					state.fetchTodoListsSuccess(allLists);
+				});
+		};
+		fetchData();
+	}, []);
 	const MainDash = function () {
 		return (
 			<>
@@ -43,12 +50,15 @@ const DashboardPage = (props) => {
 				<Dashboard.InnerContainer>
 					<Dashboard.Column>
 						<List.ListContainer listTitle='All Lists'>
-							{todoLists.length > 0 ? (
-								todoLists.map((list) => (
-									<List.ListItem onClick={() => selectList(list)} key={list.listId} isListing>
-										{list.listName}
-									</List.ListItem>
-								))
+							{state.todoLists && state.todoLists.length > 0 ? (
+								state.todoLists.map((list) => {
+									console.log(list);
+									return (
+										<List.ListItem onClick={() => selectList(list)} key={list.listId} isListing>
+											{list.listName}
+										</List.ListItem>
+									);
+								})
 							) : (
 								<p style={{ margin: '20px 0' }}>You don't have any lists yet.</p>
 							)}
@@ -113,7 +123,7 @@ const DashboardPage = (props) => {
 	};
 	return (
 		<>
-			<Header />
+			<Header resetTodosContext={() => state.resetTodosContext()} />
 			<LayoutSection
 				fullWidth
 				rowStyle={{ width: '100%', margin: '0', padding: '0', alignItems: 'center', justifyContent: 'center' }}
@@ -125,16 +135,4 @@ const DashboardPage = (props) => {
 	);
 };
 
-const mapStateToProps = (state) => {
-	return {
-		app: state.app,
-	};
-};
-
-const mapDispatchToProps = {
-	todoListsInit: (userId) => actions.getListsInit(userId),
-	addTodoList: (list) => actions.addTodoListInit(list),
-	resetTodoReducer: () => actions.resetTodosReducer(),
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
+export default DashboardPage;

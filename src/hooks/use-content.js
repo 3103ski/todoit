@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
-import { FirebaseContext } from '../context/firebase';
+import { FirebaseContext } from '../contexts/firebase';
 
-export default function useContent(target) {
+function useCollectionContent(target) {
 	const [content, setContent] = useState([]);
 	const { firebase } = useContext(FirebaseContext);
 
@@ -16,8 +16,11 @@ export default function useContent(target) {
 					docId: contentObj.id,
 				}));
 				setContent(allContent);
+				// console.log('+*+*+*FB PAYLOAD: ', allContent);
 			})
 			.catch((error) => console.log(error.message));
 	}, [target, firebase]);
 	return { [target]: content };
 }
+
+export default useCollectionContent;

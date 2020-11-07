@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Col } from 'reactstrap';
 import { LayoutSection, Footer, FormContainer, SignInForm, Header } from '../components';
+import { UserContentContext } from '../contexts/userContext';
 
 export default function SignInPage() {
+	const [userContext] = useContext(UserContentContext);
 	return (
 		<>
 			<Header />
 			<LayoutSection rowStyle={{ height: '100%', alignItems: 'center' }} containerStyle={{ height: '80vh' }}>
 				<Col md={6} className='mx-auto'>
 					<FormContainer formTitle='Login To Your Account'>
-						<SignInForm></SignInForm>
+						<SignInForm authInit={(un, pw) => userContext.authInit(un, pw)}></SignInForm>
 					</FormContainer>
 				</Col>
 			</LayoutSection>
