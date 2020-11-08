@@ -1,10 +1,15 @@
+// React
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import * as ROUTES from '../../../constants/routes';
-import { Button, Row, Col } from 'reactstrap';
-import { Form } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
+
+// Constants
+import * as ROUTES from '../../../constants/routes';
+
+// Components
+import { Button, Row, Col } from 'reactstrap';
+import { Form } from 'react-redux-form';
 import { FormInput } from '../../index';
 
 class SignUpForm extends Component {
@@ -34,7 +39,7 @@ class SignUpForm extends Component {
 		};
 		console.log(`This is the attempted user: `, newUser);
 		this.props.resetSignUpForm();
-		this.props.createNewAccount(newUser);
+		this.props.signUpInit(newUser);
 	}
 	compon;
 
@@ -122,6 +127,5 @@ class SignUpForm extends Component {
 
 const mapDispatchToProps = {
 	resetSignUpForm: () => actions.reset('signUpForm'),
-	// createNewAccount: (newUser) => action.createUserInit(newUser),
 };
 export default connect(null, mapDispatchToProps)(SignUpForm);

@@ -1,7 +1,9 @@
 import React, { useState, createContext } from 'react';
+import { updateObject } from '../util/utility';
 import { firebase } from '../lib/firebase.prod';
 
 const UserContentContext = createContext();
+
 const UserContextProvider = (props) => {
 	const [state, setState] = useState({
 		isLoading: false,
@@ -10,7 +12,8 @@ const UserContextProvider = (props) => {
 		user: null,
 		updatingProfile: false,
 		errorMsg: null,
-		error: false,
+		hasError: false,
+		signUpInit: (newUser) => signUpInit(newUser),
 		authInit: (em, pw) => authInit(em, pw),
 		authSignOut: () => signOut(),
 	});
@@ -38,46 +41,94 @@ const UserContextProvider = (props) => {
 			});
 	}
 	function authStart() {
-		return setState({
-			...state,
-			isLoading: true,
-		});
+		return setState(
+			updateObject(state, {
+				isLoading: true,
+			})
+		);
 	}
 	function authSuccess(user) {
-		return setState({
-			...state,
-			user: { ...user },
-			isLoading: false,
-			isLoggedIn: true,
-			profileLoaded: true,
-		});
+		return setState(
+			updateObject(state, {
+				user: { ...user },
+				isLoading: false,
+				isLoggedIn: true,
+				profileLoaded: true,
+			})
+		);
 	}
 	function authError(error) {
-		return setState({
-			...state,
-			isLoading: false,
-			error: true,
-			errorMsg: error,
-		});
+		return setState(
+			updateObject(state, {
+				isLoading: false,
+				hasError: true,
+				errorMsg: error,
+			})
+		);
 	}
 
 	function signOut() {
 		firebase.auth().signOut();
-		return setState({
-			...state,
-			isLoading: false,
-			profileLoaded: false,
-			isLoggedIn: false,
-			user: null,
-			updatingProfile: false,
-			errorMsg: null,
-			error: false,
-		});
-
-		//____________________
-		//  AUTHENTICATION
-		//--------------------
+		return setState(
+			updateObject(state, {
+				isLoading: false,
+				profileLoaded: false,
+				isLoggedIn: false,
+				user: null,
+				updatingProfile: false,
+				errorMsg: null,
+				hasError: false,
+			})
+		);
 	}
+
+	//____________________
+	//  NEW USER
+	//--------------------
+	function signUpInit(newUser) {
+		signUpStart();
+		firebase
+			.auth()
+			.createUserWithEmailAndPassword(newUser.email, newUser.password)
+			.then((result) =>
+				result.user.updateProfile({ displayName: newUser.firstName, lastName: newUser.lastName, username: newUser.username }).then(() => {
+					signUpSuccess(newUser);
+				})
+			)
+			.catch((error) => {
+				signUpError(error);
+			});
+	}
+
+	function signUpStart() {
+		return setState(
+			updateObject(state, {
+				isLoading: true,
+			})
+		);
+	}
+
+	function signUpError(error) {
+		return setState(
+			updateObject(state, {
+				isLoading: false,
+				hasError: true,
+				errorMsg: error,
+			})
+		);
+	}
+
+	function signUpSuccess(newUser) {
+		return setState(
+			updateObject(state, {
+				isLoading: false,
+				profileLoaded: true,
+				isLoggedIn: true,
+				user: newUser,
+			})
+		);
+	}
+
 	return <UserContentContext.Provider value={[state, setState]}>{props.children}</UserContentContext.Provider>;
 };
 
