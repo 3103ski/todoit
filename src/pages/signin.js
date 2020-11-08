@@ -1,10 +1,17 @@
+// React
 import React, { useContext } from 'react';
+
+// Components
 import { Col } from 'reactstrap';
 import { LayoutSection, Footer, FormContainer, SignInForm, Header } from '../components';
+
+// Contexts
 import { UserContentContext } from '../contexts/userContext';
 
 export default function SignInPage() {
+	// Contexts
 	const [userContext] = useContext(UserContentContext);
+
 	return (
 		<>
 			<Header />

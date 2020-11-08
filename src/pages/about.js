@@ -1,7 +1,12 @@
+// React
 import React from 'react';
-import * as colors from '../constants/colors';
-import { Feature, Footer, LayoutSection, ContactForm, FormContainer, Header } from '../components';
+
+// Components
 import { Button, Col } from 'reactstrap';
+import { Feature, Footer, LayoutSection, ContactForm, FormContainer, Header } from '../components';
+
+// Local / Static
+import * as colors from '../constants/colors';
 
 export default function AboutPage() {
 	return (
@@ -12,9 +17,9 @@ export default function AboutPage() {
 					<Feature>
 						<Feature.Title>ToDOIT Has History!</Feature.Title>
 						<Feature.SubTitle>
-							Proident aliqua dolor dolore reprehenderit qui aute consectetur ut sunt. Consequat magna aliqua dolor cupidatat pariatur elit qui nulla pariatur dolor non qui. Enim dolor enim eiusmod
-							fugiat qui ullamco. Tempor in deserunt culpa deserunt culpa do enim proident ad do. Eu velit veniam eiusmod deserunt sunt. Sit ullamco fugiat do deserunt nulla ullamco ea officia
-							proident nisi do dolore.
+							Proident aliqua dolor dolore reprehenderit qui aute consectetur ut sunt. Consequat magna aliqua dolor cupidatat pariatur elit qui nulla pariatur dolor non qui. Enim dolor
+							enim eiusmod fugiat qui ullamco. Tempor in deserunt culpa deserunt culpa do enim proident ad do. Eu velit veniam eiusmod deserunt sunt. Sit ullamco fugiat do deserunt nulla
+							ullamco ea officia proident nisi do dolore.
 						</Feature.SubTitle>
 					</Feature>
 				</Col>

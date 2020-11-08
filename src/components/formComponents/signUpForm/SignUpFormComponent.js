@@ -5,7 +5,6 @@ import { Button, Row, Col } from 'reactstrap';
 import { Form } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
-import * as action from '../../../redux/actions';
 import { FormInput } from '../../index';
 
 class SignUpForm extends Component {
@@ -123,6 +122,6 @@ class SignUpForm extends Component {
 
 const mapDispatchToProps = {
 	resetSignUpForm: () => actions.reset('signUpForm'),
-	createNewAccount: (newUser) => action.createUserInit(newUser),
+	// createNewAccount: (newUser) => action.createUserInit(newUser),
 };
 export default connect(null, mapDispatchToProps)(SignUpForm);

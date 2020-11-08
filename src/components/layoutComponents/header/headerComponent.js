@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../../redux/actions/';
+// import { connect } from 'react-redux';
+// import * as actions from '../../../redux/actions/';
 import { HeaderContainer } from './headerContainer';
 import * as ROUTES from '../../../constants/routes';
 

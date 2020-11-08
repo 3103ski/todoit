@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react';
 import { firebase } from '../lib/firebase.prod';
 
 const UserContentContext = createContext();
-const UserContentProvider = (props) => {
+const UserContextProvider = (props) => {
 	const [state, setState] = useState({
 		isLoading: false,
 		profileLoaded: false,
@@ -78,4 +78,4 @@ const UserContentProvider = (props) => {
 	return <UserContentContext.Provider value={[state, setState]}>{props.children}</UserContentContext.Provider>;
 };
 
-export { UserContentContext, UserContentProvider };
+export { UserContentContext, UserContextProvider };

@@ -71,6 +71,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
 	resetSignInForm: () => actions.reset('signInForm'),
-	logInUserInit: (email, password) => ActionTypes.logInUserInit(email, password),
+	// logInUserInit: (email, password) => ActionTypes.logInUserInit(email, password),
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

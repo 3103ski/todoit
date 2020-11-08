@@ -6,7 +6,7 @@ export { default as List } from './listComponents';
 //______________________
 // LAYOUT COMPONENTS
 //----------------------
-export { default as Header } from './layoutComponents/header/header';
+export { default as Header } from './layoutComponents/header/headerComponent';
 export { default as LayoutSection } from './layoutComponents/layoutSection/LayoutSection';
 export { default as Footer } from './layoutComponents/footer/FooterComponent';
 //______________________
@@ -19,4 +19,4 @@ export { default as SignUpForm } from './formComponents/signUpForm/SignUpFormCom
 export { default as SignInForm } from './formComponents/signInForm/SignInFormComponent';
 export { default as NewTodoListForm } from './formComponents/addTodoList/NewTodoListForm';
 //
-export { default as Feature } from './feature';
+export { default as Feature } from './layoutComponents/feature';

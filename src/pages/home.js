@@ -1,6 +1,11 @@
+// React
 import React from 'react';
+
+// Components
 import { Feature, LayoutSection, Footer, ContactForm, Header } from '../components';
 import { Button, Col } from 'reactstrap';
+
+// Static
 import * as colors from '../constants/colors';
 
 export default function HomePage() {

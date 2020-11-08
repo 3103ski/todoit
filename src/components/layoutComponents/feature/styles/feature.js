@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import * as color from '../../../constants/colors';
+import * as color from '../../../../constants/colors';
 
 export const Container = styled.div`
 	display: flex;

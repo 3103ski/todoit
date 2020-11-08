@@ -1,10 +1,15 @@
+// Redux
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { createForms } from 'react-redux-form';
-import thunk from 'redux-thunk';
-// import logger from 'redux-logger';
+
+// Form reducers for initial states
 import { ContactInitial, InitialSignUp, InitialSignIn, NewTodoListInitial } from './reducers';
 
-export const ConfigureStore = () => {
+// Middleware
+import thunk from 'redux-thunk';
+// import logger from 'redux-logger';
+
+export const ConfigureStoreForForms = () => {
 	const store = createStore(
 		combineReducers({
 			...createForms({

@@ -1,10 +1,14 @@
+// React
 import React, { Component } from 'react';
-import * as ActionTypes from '../../../redux/actions';
-import { Button, Row, Col } from 'reactstrap';
-import { Form } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
+// Components
+import { Button, Row, Col } from 'reactstrap';
+import { Form } from 'react-redux-form';
 import { FormInput } from '../../index';
+// Static
+import * as ActionTypes from '../../../redux/actions';
+// Utility
 import { randomId } from '../../../util/utility';
 
 class NewTodoListForm extends Component {
@@ -81,7 +85,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
 	resetNewTodoListForm: () => actions.reset('newTodoListForm'),
-	addTodoList: (list) => ActionTypes.addTodoListInit(list),
-	listsInit: (uid) => ActionTypes.getListsInit(uid),
+	addTodoList: (list, userId) => ActionTypes.addTodoListInit(list, userId),
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewTodoListForm);

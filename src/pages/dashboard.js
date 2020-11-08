@@ -1,48 +1,49 @@
 // React and Hooks
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
+// DB & Contexts
 import { TodoContentContext } from '../contexts/todosContext';
-import { UserContentContext } from '../contexts/userContext';
-import { firebase } from '../lib/firebase.prod';
-// UI components
+// Components
 import { LayoutSection, Footer, Header, Dashboard, List, NewTodoListForm } from '../components';
 import { Button, Modal, ModalBody, ModalHeader } from 'reactstrap';
-// local
-import { useAuthListener } from '../hooks/';
+// Hooks
+import { useAuthListener, fetchTodoLists } from '../hooks/';
+// local / static
 import { fakeData } from '../constants/fakeData';
 
+//******************************************************* */
+//******************************************************* */
 const DashboardPage = () => {
-	const { user } = useAuthListener();
-	const [state] = useContext(TodoContentContext);
-	const [userContext] = useContext(UserContentContext);
-	// local state
-	const [view, setView] = useState('MainDash');
-	const [activeList, setActiveList] = useState(null);
-	const [modal, setModal] = useState(false);
-	const toggleModal = () => setModal(!modal);
+	//______
+	// Page Variables
+	//------
 
+	const { user } = useAuthListener();
+	const [subView, setSubView] = useState('MainDash');
+	fetchTodoLists('todolists', user.uid);
+
+	// Contexts
+	const [todoContext] = useContext(TodoContentContext);
+
+	// TodoLists
+	const [activeList, setActiveList] = useState(null);
+	const [addTodoListModal, setAddTodoListModal] = useState(false);
+	const toggleAddTodoListModal = () => setAddTodoListModal(!addTodoListModal);
+
+	// Todos
+	const [addTodoModal, setAddTodoModal] = useState(false);
+	const toggleAddTodoModal = () => setAddTodoModal(!addTodoModal);
+
+	//______
+	// Functions to change sub view
+	//------
 	const selectList = function (list) {
 		setActiveList(list);
-		setView('FullList');
-		console.log(view);
+		setSubView('FullList');
 	};
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const db = firebase.firestore();
-			state.fetchTodoListsStart();
-			db.collection('todolists')
-				.where('ownerId', '==', `${user.uid}`)
-				.onSnapshot(function (data) {
-					console.log(data);
-					const allLists = data.docs.map((doc) => {
-						console.log(doc.data());
-						return { ...doc.data(), id: doc.id };
-					});
-					state.fetchTodoListsSuccess(allLists);
-				});
-		};
-		fetchData();
-	}, []);
+	//______
+	// Used as sub view in RenderDash component below
+	//------
 	const MainDash = function () {
 		return (
 			<>
@@ -50,8 +51,8 @@ const DashboardPage = () => {
 				<Dashboard.InnerContainer>
 					<Dashboard.Column>
 						<List.ListContainer listTitle='All Lists'>
-							{state.todoLists && state.todoLists.length > 0 ? (
-								state.todoLists.map((list) => {
+							{todoContext.todoLists && todoContext.todoLists.length > 0 ? (
+								todoContext.todoLists.map((list) => {
 									console.log(list);
 									return (
 										<List.ListItem onClick={() => selectList(list)} key={list.listId} isListing>
@@ -62,11 +63,11 @@ const DashboardPage = () => {
 							) : (
 								<p style={{ margin: '20px 0' }}>You don't have any lists yet.</p>
 							)}
-							<Button onClick={toggleModal}>ADD TODO LIST</Button>
-							<Modal isOpen={modal} toggle={toggleModal}>
-								<ModalHeader toggle={toggleModal}>Modal title</ModalHeader>
+							<Button onClick={toggleAddTodoListModal}>ADD TODO LIST</Button>
+							<Modal isOpen={addTodoListModal} toggle={toggleAddTodoListModal}>
+								<ModalHeader toggle={toggleAddTodoListModal}>Modal title</ModalHeader>
 								<ModalBody>
-									<NewTodoListForm toggleFormModal={toggleModal} userId={user ? user.uid : null}></NewTodoListForm>
+									<NewTodoListForm toggleFormModal={toggleAddTodoListModal} userId={user ? user.uid : null}></NewTodoListForm>
 								</ModalBody>
 							</Modal>
 						</List.ListContainer>
@@ -85,12 +86,15 @@ const DashboardPage = () => {
 		);
 	};
 
+	//______
+	// Used as sub view in RenderDash component below
+	//------
 	const ListSelected = function (props) {
 		console.log(activeList);
 		return (
 			<>
 				<Dashboard.InnerContainer>
-					<Dashboard.Title style={{ cursor: 'pointer' }} onClick={() => setView('MainDash')}>
+					<Dashboard.Title style={{ cursor: 'pointer' }} onClick={() => setSubView('MainDash')}>
 						GoBack
 					</Dashboard.Title>
 					<List.ListContainer listTitle={activeList.listName}>
@@ -99,11 +103,11 @@ const DashboardPage = () => {
 						) : (
 							<p style={{ margin: '20px 0' }}>You don't have any todos yet.</p>
 						)}
-						<Button onClick={toggleModal}>ADD TODO</Button>
-						<Modal isOpen={modal} toggle={toggleModal}>
-							<ModalHeader toggle={toggleModal}>Modal title</ModalHeader>
+						<Button onClick={toggleAddTodoModal}>ADD TODO</Button>
+						<Modal isOpen={addTodoModal} toggle={toggleAddTodoModal}>
+							<ModalHeader toggle={toggleAddTodoModal}>Modal title</ModalHeader>
 							<ModalBody>
-								<NewTodoListForm toggleFormModal={toggleModal} userId={user.uid}></NewTodoListForm>
+								<NewTodoListForm toggleFormModal={toggleAddTodoModal} userId={user.uid}></NewTodoListForm>
 							</ModalBody>
 						</Modal>
 					</List.ListContainer>
@@ -111,8 +115,12 @@ const DashboardPage = () => {
 			</>
 		);
 	};
-	const renderDash = function () {
-		switch (view) {
+
+	//______
+	// Renders appropriate sub view on dash for app state
+	//------
+	const RenderDash = function () {
+		switch (subView) {
 			case 'MainDash':
 				return <MainDash />;
 			case 'FullList':
@@ -121,14 +129,15 @@ const DashboardPage = () => {
 				return <MainDash />;
 		}
 	};
+
 	return (
 		<>
-			<Header resetTodosContext={() => state.resetTodosContext()} />
+			<Header resetTodosContext={() => todoContext.resetTodosContext()} />
 			<LayoutSection
 				fullWidth
 				rowStyle={{ width: '100%', margin: '0', padding: '0', alignItems: 'center', justifyContent: 'center' }}
 				containerStyle={{ height: '80vh', display: 'flex', padding: '0' }}>
-				<Dashboard>{renderDash()}</Dashboard>
+				<Dashboard>{RenderDash()}</Dashboard>
 			</LayoutSection>
 			<Footer footerStyle={{ height: '20vh' }} />
 		</>

@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react';
 
 const TodoContentContext = createContext();
 
-function TodoContentProvider({ children }) {
+function TodoContextProvider({ children }) {
 	const [state, setState] = useState({
 		todoLists: [],
 		listsLoaded: false,
@@ -15,6 +15,10 @@ function TodoContentProvider({ children }) {
 		fetchTodoListsStart: () => fetchListsStart(),
 		resetTodosContext: () => resetContext(),
 	});
+
+	//____________________
+	// TodoList Fetching
+	//--------------------
 
 	function fetchListsSuccess(listOfLists) {
 		return setState({
@@ -45,6 +49,11 @@ function TodoContentProvider({ children }) {
 		});
 	}
 
+	//____________________
+	// TodoList Adding
+	//--------------------
+
+	// DEFAULT CONTEXT
 	function resetContext() {
 		return setState({
 			...state,
@@ -60,4 +69,4 @@ function TodoContentProvider({ children }) {
 	return <TodoContentContext.Provider value={[state, setState]}>{children}</TodoContentContext.Provider>;
 }
 
-export { TodoContentContext, TodoContentProvider };
+export { TodoContentContext, TodoContextProvider };

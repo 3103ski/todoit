@@ -1,4 +1,7 @@
+// React
 import React from 'react';
+
+// Components
 import { Col } from 'reactstrap';
 import { FormContainer, LayoutSection, Footer, SignUpForm, Header } from '../components';
 
