@@ -9,7 +9,6 @@ import { LayoutSection, Footer, FormContainer, SignInForm, Header } from '../com
 import { UserContentContext } from '../contexts/userContext';
 
 export default function SignInPage() {
-	// Contexts
 	const [userContext] = useContext(UserContentContext);
 
 	return (

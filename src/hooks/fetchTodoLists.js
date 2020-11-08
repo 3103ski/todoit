@@ -13,9 +13,7 @@ function GetUserCollection(target, userId) {
 			db.collection(target)
 				.where('ownerId', '==', `${userId}`)
 				.onSnapshot(function (data) {
-					// console.log(data);
 					const allLists = data.docs.map((doc) => {
-						console.log(doc.data());
 						return { ...doc.data(), id: doc.id };
 					});
 					todoContext.fetchTodoListsSuccess(allLists);

@@ -19,7 +19,6 @@ const DashboardPage = () => {
 
 	const { user } = useAuthListener();
 	const [subView, setSubView] = useState('MainDash');
-	fetchTodoLists('todolists', user.uid);
 
 	// Contexts
 	const [todoContext] = useContext(TodoContentContext);
@@ -32,6 +31,10 @@ const DashboardPage = () => {
 	// Todos
 	const [addTodoModal, setAddTodoModal] = useState(false);
 	const toggleAddTodoModal = () => setAddTodoModal(!addTodoModal);
+
+	if (user) {
+		fetchTodoLists('todolists', user.uid);
+	}
 
 	//______
 	// Functions to change sub view
@@ -67,7 +70,10 @@ const DashboardPage = () => {
 							<Modal isOpen={addTodoListModal} toggle={toggleAddTodoListModal}>
 								<ModalHeader toggle={toggleAddTodoListModal}>Modal title</ModalHeader>
 								<ModalBody>
-									<NewTodoListForm toggleFormModal={toggleAddTodoListModal} userId={user ? user.uid : null}></NewTodoListForm>
+									<NewTodoListForm
+										addTodoList={(newList) => todoContext.addTodoListInit(newList)}
+										toggleFormModal={toggleAddTodoListModal}
+										userId={user ? user.uid : null}></NewTodoListForm>
 								</ModalBody>
 							</Modal>
 						</List.ListContainer>
@@ -90,7 +96,6 @@ const DashboardPage = () => {
 	// Used as sub view in RenderDash component below
 	//------
 	const ListSelected = function (props) {
-		console.log(activeList);
 		return (
 			<>
 				<Dashboard.InnerContainer>

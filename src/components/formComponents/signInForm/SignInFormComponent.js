@@ -1,9 +1,11 @@
+// React
 import React, { Component } from 'react';
-import * as ActionTypes from '../../../redux/actions';
-import { Button, Row, Col } from 'reactstrap';
-import { Form } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
+
+// Components
+import { Button, Row, Col } from 'reactstrap';
+import { Form } from 'react-redux-form';
 import { FormInput } from '../../index';
 class SignInForm extends Component {
 	constructor(props) {
@@ -71,6 +73,5 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
 	resetSignInForm: () => actions.reset('signInForm'),
-	// logInUserInit: (email, password) => ActionTypes.logInUserInit(email, password),
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

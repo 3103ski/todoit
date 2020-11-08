@@ -34,7 +34,6 @@ const UserContextProvider = (props) => {
 				return console.log('user state!', state);
 			})
 			.catch((error) => {
-				console.log('_*_*_*_*_*_*_!!ERROR!!_*_*_*_*_*_*', error);
 				return authError(error);
 			});
 	}
@@ -74,6 +73,10 @@ const UserContextProvider = (props) => {
 			errorMsg: null,
 			error: false,
 		});
+
+		//____________________
+		//  AUTHENTICATION
+		//--------------------
 	}
 	return <UserContentContext.Provider value={[state, setState]}>{props.children}</UserContentContext.Provider>;
 };
