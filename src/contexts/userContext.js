@@ -27,14 +27,14 @@ const UserContextProvider = (props) => {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then((res) => {
-				const userProfile = {
-					email: res.user.email,
-					displayName: res.user.displayName,
-					refreshToken: res.user.refreshToken,
-					uid: res.user.uid,
+				const user = res.user;
+				const profile = {
+					email: user.email,
+					displayName: user.displayName,
+					refreshToken: user.refreshToken,
+					uid: user.uid,
 				};
-				authSuccess(userProfile);
-				return console.log('user state!', state);
+				return authSuccess(profile);
 			})
 			.catch((error) => {
 				return authError(error);
